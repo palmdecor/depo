@@ -6,8 +6,8 @@ PHP, MySQL ve basit bir ön yüz ile hazırlanmış müşteri-yönetici yönetim
 
 - Güvenli müşteri kayıt ve giriş sistemi (SHA-512 + rastgele tuz ile şifre saklama)
 - Yönetici ve müşteri için farklı yetkiler
-- Müşteriler için: Anasayfa, PDF raporları görüntüleme ve şifre güncelleme alanları
-- Yönetici için: Müşteri arama, rapor yükleme ve müşteri hesabını engelleme/aktifleştirme işlemleri
+- Müşteriler için: Anasayfa, PDF raporları görüntüleme, sözleşme doldurma/indirme ve şifre güncelleme alanları
+- Yönetici için: Müşteri arama, rapor yükleme, sözleşme şablonu düzenleme ve müşteri hesabını engelleme/aktifleştirme işlemleri
 - PDF raporları yükleme ve müşterilerin indirmesi için saklama alanı
 - Modern ve responsive arayüz
 
@@ -40,6 +40,7 @@ Güvenlik amacıyla ilk giriş sonrasında şifreyi güncellemeniz önerilir.
 
 - Müşteriler kayıt formu ile sisteme dahil olabilir ve giriş sonrası raporlarını görebilir, şifrelerini değiştirebilir.
 - Yönetici paneli, müşteri listesini arama alanı ile filtreleyebilir. Her müşteri için detay sayfasından PDF raporu yüklenebilir ve müşteri engellenip/aktifleştirilebilir.
+- "Sözleşme Şablonu" bölümünden sözleşme metni düzenlenebilir; müşteri bilgileri [[MUSTERI_BILGILERI]] etiketi ile sözleşmeye otomatik olarak eklenir.
 
 ## Geliştirme Notları
 

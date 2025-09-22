@@ -88,7 +88,8 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #d1d5db;
@@ -97,9 +98,31 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   border-color: var(--primary);
   outline: none;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+}
+
+.checkbox-row input {
+  width: auto;
 }
 
 button,

@@ -19,10 +19,12 @@ if (!isset($pageTitle)) {
             <?php if (is_logged_in()): ?>
                 <?php if (is_admin()): ?>
                     <a href="admin_dashboard.php" class="<?php echo ($activePage ?? '') === 'admin_dashboard' ? 'active' : ''; ?>">Müşteri Listesi</a>
+                    <a href="admin_contract.php" class="<?php echo ($activePage ?? '') === 'admin_contract' ? 'active' : ''; ?>">Sözleşme Şablonu</a>
                     <a href="logout.php">Çıkış Yap</a>
                 <?php else: ?>
                     <a href="customer_home.php" class="<?php echo ($activePage ?? '') === 'home' ? 'active' : ''; ?>">Anasayfa</a>
                     <a href="customer_reports.php" class="<?php echo ($activePage ?? '') === 'reports' ? 'active' : ''; ?>">Raporlarım</a>
+                    <a href="customer_contract.php" class="<?php echo ($activePage ?? '') === 'contract' ? 'active' : ''; ?>">Sözleşmem</a>
                     <a href="customer_password.php" class="<?php echo ($activePage ?? '') === 'password' ? 'active' : ''; ?>">Şifre Güncelle</a>
                     <a href="logout.php">Çıkış Yap</a>
                 <?php endif; ?>
