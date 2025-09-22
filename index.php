@@ -29,6 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user'] = [
             'username' => $username,
             'login_time' => time(),
+            'profile' => [
+                'first_name' => 'Demo',
+                'last_name' => 'Kullanıcı',
+            ],
+            'password_hash' => $users[$username],
         ];
         header('Location: dashboard.php');
         exit;
