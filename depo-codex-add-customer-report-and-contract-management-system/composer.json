@@ -1,0 +1,18 @@
+{
+    "name": "depo/customer-report-contract-system",
+    "description": "Saf PHP ile müşteri rapor ve sözleşme yönetimi",
+    "type": "project",
+    "require": {
+        "php": "^8.1",
+        "ext-soap": "*",
+        "mpdf/mpdf": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/Support/helpers.php"
+        ]
+    }
+}
