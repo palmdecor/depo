@@ -4,6 +4,7 @@
     "type": "project",
     "require": {
         "php": "^8.1",
+        "ext-soap": "*",
         "mpdf/mpdf": "^8.1"
     },
     "autoload": {

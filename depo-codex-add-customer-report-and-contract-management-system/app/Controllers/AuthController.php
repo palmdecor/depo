@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Exceptions\IdentityVerificationException;
 use App\Http\Request;
 use App\Http\Response;
 use App\Services\AuthService;
@@ -27,16 +28,47 @@ class AuthController
 
     public function register(): string
     {
-        $data = Request::only(['first_name', 'last_name', 'phone', 'email', 'password', 'password_confirmation']);
+        $data = Request::only([
+            'first_name',
+            'last_name',
+            'phone',
+            'email',
+            'national_id',
+            'birth_year',
+            'password',
+            'password_confirmation',
+        ]);
         $data = array_map(static fn($value) => is_string($value) ? trim($value) : $value, $data);
+
+        if (isset($data['national_id'])) {
+            $data['national_id'] = preg_replace('/\D+/', '', (string) $data['national_id']);
+        }
+
+        if (isset($data['birth_year'])) {
+            $data['birth_year'] = preg_replace('/\D+/', '', (string) $data['birth_year']);
+        }
 
         $errors = Validator::validate($data, [
             'first_name' => 'required',
             'last_name' => 'required',
             'phone' => 'required',
             'email' => 'required|email',
+            'national_id' => 'required|digits:11',
+            'birth_year' => 'required|digits:4',
             'password' => 'required|min:8|confirmed',
         ]);
+
+        if (!empty($data['birth_year'])) {
+            $birthYear = (int) $data['birth_year'];
+            $currentYear = (int) date('Y');
+            if ($birthYear < 1900 || $birthYear > $currentYear) {
+                $errors['birth_year'][] = 'Geçerli bir doğum yılı giriniz.';
+            }
+        }
+
+        if (!empty($data['national_id']) && !preg_match('/^[1-9][0-9]{10}$/', (string) $data['national_id'])) {
+            $errors['national_id'][] = 'TC kimlik numarası 11 haneli ve 0 ile başlamamalıdır.';
+        }
 
         if ($this->auth->user()) {
             Response::redirect('/dashboard');
@@ -58,9 +90,25 @@ class AuthController
             Response::redirect('/register');
         }
 
+        if ($this->auth->nationalIdExists($data['national_id'])) {
+            $_SESSION['errors'] = ['national_id' => ['Bu TC kimlik numarası ile kayıt mevcut.']];
+            $old = $data;
+            unset($old['password'], $old['password_confirmation']);
+            $_SESSION['old'] = $old;
+            Response::redirect('/register');
+        }
+
         unset($_SESSION['errors'], $_SESSION['old']);
 
-        $user = $this->auth->register($data);
+        try {
+            $user = $this->auth->register($data);
+        } catch (IdentityVerificationException $exception) {
+            $_SESSION['errors'] = ['national_id' => [$exception->getMessage()]];
+            $old = $data;
+            unset($old['password'], $old['password_confirmation']);
+            $_SESSION['old'] = $old;
+            Response::redirect('/register');
+        }
         $this->auth->loginUser($user);
 
         Response::redirect('/dashboard');

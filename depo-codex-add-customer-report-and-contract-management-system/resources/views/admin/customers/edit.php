@@ -10,6 +10,8 @@
             <div class="card-body">
                 <p><strong>E-posta:</strong> <?= htmlspecialchars($customer['email']) ?></p>
                 <p><strong>Telefon:</strong> <?= htmlspecialchars($customer['phone']) ?></p>
+                <p><strong>TC Kimlik No:</strong> <?= htmlspecialchars($customer['national_id'] ?? '-') ?></p>
+                <p><strong>Doğum Yılı:</strong> <?= htmlspecialchars($customer['birth_year'] ?? '-') ?></p>
                 <p><strong>Durum:</strong> <span class="badge <?= (int) $customer['is_blocked'] === 1 ? 'bg-danger' : 'bg-success' ?>"><?= (int) $customer['is_blocked'] === 1 ? 'Engelli' : 'Aktif' ?></span></p>
                 <p><strong>Son Giriş:</strong> <?= $customer['last_login_at'] ? htmlspecialchars($customer['last_login_at']) : '-' ?></p>
                 <form method="POST" action="/admin/customers/status">

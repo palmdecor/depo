@@ -2,12 +2,16 @@
 
 namespace App\Services;
 
+use App\Exceptions\IdentityVerificationException;
 use App\Repositories\UserRepository;
+use RuntimeException;
 
 class AuthService
 {
-    public function __construct(private UserRepository $users)
-    {
+    public function __construct(
+        private UserRepository $users,
+        private IdentityVerificationService $identityVerifier
+    ) {
     }
 
     public function emailExists(string $email): bool
@@ -15,8 +19,28 @@ class AuthService
         return (bool) $this->users->findByEmail(strtolower($email));
     }
 
+    public function nationalIdExists(string $nationalId): bool
+    {
+        return (bool) $this->users->findByNationalId($nationalId);
+    }
+
     public function register(array $data): array
     {
+        try {
+            $verified = $this->identityVerifier->verify(
+                (string) $data['national_id'],
+                (string) $data['first_name'],
+                (string) $data['last_name'],
+                (int) $data['birth_year']
+            );
+        } catch (RuntimeException $exception) {
+            throw new IdentityVerificationException($exception->getMessage(), 0, $exception);
+        }
+
+        if ($verified !== true) {
+            throw new IdentityVerificationException('Kimlik bilgileriniz doğrulanamadı. Lütfen kontrol ederek tekrar deneyin.');
+        }
+
         $passwordHash = password_hash($data['password'], PASSWORD_BCRYPT);
 
         $userId = $this->users->create([
@@ -25,6 +49,8 @@ class AuthService
             'phone' => $data['phone'],
             'email' => strtolower($data['email']),
             'password' => $passwordHash,
+            'national_id' => $data['national_id'],
+            'birth_year' => (int) $data['birth_year'],
             'role' => $data['role'] ?? 'customer',
             'is_blocked' => 0,
             'created_at' => date('Y-m-d H:i:s'),

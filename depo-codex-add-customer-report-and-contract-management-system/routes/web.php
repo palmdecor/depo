@@ -11,6 +11,7 @@ use App\Repositories\ReportRepository;
 use App\Repositories\UserRepository;
 use App\Services\AuthService;
 use App\Services\ContractService;
+use App\Services\IdentityVerificationService;
 use App\Services\ReportService;
 use App\Support\Router;
 
@@ -21,7 +22,8 @@ $userRepository = new UserRepository();
 $reportRepository = new ReportRepository();
 $contractTemplateRepository = new ContractTemplateRepository();
 $contractSubmissionRepository = new ContractSubmissionRepository();
-$authService = new AuthService($userRepository);
+$identityVerificationService = new IdentityVerificationService();
+$authService = new AuthService($userRepository, $identityVerificationService);
 $contractService = new ContractService($contractTemplateRepository, $contractSubmissionRepository);
 $reportService = new ReportService($reportRepository);
 

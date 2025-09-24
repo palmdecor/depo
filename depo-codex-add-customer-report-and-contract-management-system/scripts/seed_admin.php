@@ -18,6 +18,8 @@ $repo->create([
     'phone' => '+900000000000',
     'email' => 'admin@depo.local',
     'password' => password_hash('password123', PASSWORD_BCRYPT),
+    'national_id' => '10000000000',
+    'birth_year' => 1990,
     'role' => 'admin',
     'is_blocked' => 0,
     'created_at' => date('Y-m-d H:i:s'),

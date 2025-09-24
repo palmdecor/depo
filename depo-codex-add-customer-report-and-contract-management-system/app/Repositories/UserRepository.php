@@ -18,6 +18,11 @@ class UserRepository
         return User::findBy(['id' => $id]);
     }
 
+    public function findByNationalId(string $nationalId): ?array
+    {
+        return User::findBy(['national_id' => $nationalId]);
+    }
+
     public function create(array $data): int
     {
         return User::create($data);

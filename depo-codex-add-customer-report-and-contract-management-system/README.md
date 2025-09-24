@@ -36,6 +36,7 @@ Bu proje, herhangi bir framework kullanmadan PHP 8 ile geliştirilmiş tam özel
 ## Özellikler
 ### Müşteri Paneli
 - Kayıt olma ve giriş yapma
+- NVI TC kimlik doğrulamasından geçerek kayıt olma
 - Rapor listesini görüntüleme ve PDF indirme
 - Şifre güncelleme
 - Yönetici tarafından sağlanan şablonla sözleşme doldurma ve PDF çıktısı alma
@@ -49,6 +50,7 @@ Bu proje, herhangi bir framework kullanmadan PHP 8 ile geliştirilmiş tam özel
 
 ### Güvenlik
 - `password_hash()` (BCRYPT) ile şifre saklama
+- NVI (KPS Public V2) servisi ile TC kimlik no, ad/soyad ve doğum yılı doğrulaması
 - PDO prepared statements ile SQL Injection koruması
 - CSRF token doğrulaması
 - XSS’e karşı form verilerinde `htmlspecialchars`

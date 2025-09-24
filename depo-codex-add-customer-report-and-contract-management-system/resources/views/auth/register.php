@@ -18,6 +18,16 @@
         <label class="form-label">Telefon</label>
         <input type="text" name="phone" value="<?= htmlspecialchars($old['phone'] ?? '') ?>" class="form-control" required>
     </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">TC Kimlik No</label>
+            <input type="text" name="national_id" value="<?= htmlspecialchars($old['national_id'] ?? '') ?>" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Doğum Yılı</label>
+            <input type="text" name="birth_year" value="<?= htmlspecialchars($old['birth_year'] ?? '') ?>" class="form-control" required>
+        </div>
+    </div>
     <div class="mb-3">
         <label class="form-label">E-posta</label>
         <input type="email" name="email" value="<?= htmlspecialchars($old['email'] ?? '') ?>" class="form-control" required>
